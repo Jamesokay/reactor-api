@@ -2,7 +2,7 @@ const router = require('express').Router()
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
 
-//Register
+//Registration route
 router.post('/register', async (req, res) => {
     try {
         // Generate new password
@@ -16,10 +16,26 @@ router.post('/register', async (req, res) => {
             password: hashedPassword
         })
 
-        // Save user abd respond
+        // Save user and respond
         const user = await newUser.save()
         res.status(200).json(user)
     } catch(err) {
+        console.error(err)
+    }
+})
+
+// Login route
+router.post('/login', async (req, res) => {
+    try {
+      const user = await User.findOne({email: req.body.email})
+      !user && res.status(404).json('User not found')
+
+      const validPassword = await bcrypt.compare(req.body.password, user.password)
+      !validPassword && res.status(400).json('Invalid password')
+
+      res.status(200).json(user)
+    } catch(err) {
+        // add custom error handling
         console.error(err)
     }
 })
