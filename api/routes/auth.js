@@ -35,7 +35,6 @@ router.post('/login', async (req, res) => {
 
       res.status(200).json(user)
     } catch(err) {
-        // add custom error handling
         console.error(err)
     }
 })

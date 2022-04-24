@@ -10,6 +10,10 @@ const PostSchema = new mongoose.Schema(
       type: String,
       max: 500,
     },
+    tags: {
+      type: Array,
+      default: [],
+    },
     img: {
       type: String,
     },
@@ -17,6 +21,10 @@ const PostSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
+    comments: {
+      type: Array,
+      default: [],
+    }
   },
   { timestamps: true }
 );
